@@ -28,27 +28,28 @@ data Hamburguesa = Hamburguesa {
 precioFinal :: Hamburguesa -> Number
 precioFinal (Hamburguesa precioBase ingredientes) = precioBase + sum (map precioIngrediente ingredientes)
 
+getIngredienteBase :: Hamburguesa -> Ingrediente
+getIngredienteBase (Hamburguesa _ ingredientes)
+    | elem PatiVegano ingredientes = PatiVegano
+    | elem Carne ingredientes = Carne
+    | elem Pollo ingredientes = Pollo
+
 agrandar :: Hamburguesa -> Hamburguesa
-agrandar hamburguesa
-    | elem PatiVegano (ingredientes hamburguesa) = agregarIngrediente PatiVegano hamburguesa
-    | elem Carne (ingredientes hamburguesa) = agregarIngrediente Carne hamburguesa
-    | elem Pollo (ingredientes hamburguesa) = agregarIngrediente Pollo hamburguesa
-    | otherwise = hamburguesa
+agrandar hamburguesa = agregarIngrediente (getIngredienteBase hamburguesa) hamburguesa
 
 agregarIngrediente :: Ingrediente -> Hamburguesa -> Hamburguesa
 agregarIngrediente nuevoIngrediente hamburguesa = 
     hamburguesa { ingredientes = nuevoIngrediente : ingredientes hamburguesa }
 
+porcentaje :: Number -> Number
+porcentaje unNumero = (100 - unNumero)/100
+
 descuento :: Number -> Hamburguesa -> Hamburguesa
 descuento porcentajeDescuento hamburguesa = 
-    hamburguesa { precioBase = precioBase hamburguesa * (100 - porcentajeDescuento)/100}  
+    hamburguesa { precioBase = precioBase hamburguesa * porcentaje porcentajeDescuento}  
 
 delDia :: Hamburguesa -> Hamburguesa
-delDia hamburguesa = (agregarIngrediente Papas . descuento 30) hamburguesa
-
-hacerVeggie :: Hamburguesa -> Hamburguesa
-hacerVeggie hamburguesa =
-    hamburguesa { ingredientes = map cambiarIngredienteAVegano (ingredientes hamburguesa)}
+delDia hamburguesa = agregarIngrediente Papas . descuento 30 $ hamburguesa
 
 cambiarIngredienteAVegano :: Ingrediente -> Ingrediente
 cambiarIngredienteAVegano Carne = PatiVegano
@@ -57,9 +58,14 @@ cambiarIngredienteAVegano Cheddar = QuesoDeAlmendras
 cambiarIngredienteAVegano Panceta = BaconDeTofu
 cambiarIngredienteAVegano ingrediente = ingrediente
 
+hacerVeggie :: Hamburguesa -> Hamburguesa
+hacerVeggie hamburguesa =
+    hamburguesa { ingredientes = map cambiarIngredienteAVegano (ingredientes hamburguesa)}
+
 cambiarPan :: Ingrediente -> Ingrediente
 cambiarPan Pan = PanIntegral
+cambiarPan ingrediente = ingrediente
 
 cambiarPanDePati :: Hamburguesa -> Hamburguesa
 cambiarPanDePati hamburguesa =
-    hamburguesa {ingredientes = map cambiarPan (ingredientes hamburguesa)}
+    hamburguesa { ingredientes = map cambiarPan (ingredientes hamburguesa)}

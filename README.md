@@ -6,8 +6,8 @@
 - [x] Ir a la carpeta donde descargaste el ejercicio.
 - [x] Reemplazar nombre y legajo en el archivo README.md
 - [x] Resolver el ejercicio siguiendo [un esquema de trabajo](https://github.com/pdep-utn/enunciados-miercoles-noche/blob/master/pages/haskell/trabajo.md), eso incluye
-- [ ] Ejecutar los tests con `stack test` y que den verde
-- [ ] A medida que vas resolviendo el ejercicio, subir [el progreso a git](https://github.com/pdep-utn/enunciados-miercoles-noche/blob/master/pages/git/resolverConflictos.md)
+- [x] Ejecutar los tests con `stack test` y que den verde
+- [x] A medida que vas resolviendo el ejercicio, subir [el progreso a git](https://github.com/pdep-utn/enunciados-miercoles-noche/blob/master/pages/git/resolverConflictos.md)
 
 ## Equipo
 
@@ -45,7 +45,7 @@ Un ejemplo de hamburguesa es el **cuartoDeLibra**, una hamburguesa de pan, carne
  Partiendo de esto modelamos:
  
 - **agrandar**: cada vez que se agranda una hamburguesa se agrega otro ingrediente base (por ahora, son Carne o Pollo), se elige el ingrediente base a agregar según lo que ya haya en la hamburguesa (si había carne se agrega carne, si había pollo se agrega pollo, si había ambos da igual cuál se agregue).
-- **agregarIngrediente**: recibe un ingrediente y una hambrugesa lo agrega a la hamburguesa.
+- **agregarIngrediente**: recibe un ingrediente y una hamburguesa lo agrega a la hamburguesa.
 - **descuento**: recibe un % de descuento, y devuelve la hamburguesa con ese descuento aplicado al precio base.
 - la **pdepBurger**, que es un cuarto de libra agrandado 2 veces con panceta, cheddar y 20% de descuento. Su precio final deberia ser 110.
 
