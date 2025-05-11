@@ -26,23 +26,26 @@ data Hamburguesa = Hamburguesa {
 
 
 precioFinal :: Hamburguesa -> Number
-precioFinal (Hamburguesa precioBase ingredientes) = precioBase + sum (map precioIngrediente ingredientes)
+precioFinal (Hamburguesa precioBase ingredientes) = precioBase + (sum . map precioIngrediente) ingredientes
 
 getIngredienteBase :: Hamburguesa -> Ingrediente
-getIngredienteBase (Hamburguesa _ ingredientes)
-    | elem PatiVegano ingredientes = PatiVegano
-    | elem Carne ingredientes = Carne
-    | elem Pollo ingredientes = Pollo
+getIngredienteBase hamburguesa
+    | elem PatiVegano (ingredientes hamburguesa) = PatiVegano
+    | elem Carne (ingredientes hamburguesa) = Carne
+    | elem Pollo (ingredientes hamburguesa) = Pollo
+    | otherwise = error "La hamburguesa no tiene carne!"
 
 agrandar :: Hamburguesa -> Hamburguesa
 agrandar hamburguesa = agregarIngrediente (getIngredienteBase hamburguesa) hamburguesa
 
 agregarIngrediente :: Ingrediente -> Hamburguesa -> Hamburguesa
-agregarIngrediente nuevoIngrediente hamburguesa = 
-    hamburguesa { ingredientes = nuevoIngrediente : ingredientes hamburguesa }
+agregarIngrediente nuevoIngrediente hamburguesa =
+        hamburguesa { ingredientes = (head . ingredientes) hamburguesa : nuevoIngrediente : (tail . ingredientes) hamburguesa }
 
 porcentaje :: Number -> Number
-porcentaje unNumero = (100 - unNumero)/100
+porcentaje unNumero
+    | unNumero < 0 = error "El Porcentaje no puede ser negativo"
+    | otherwise = (100 - unNumero)/100
 
 descuento :: Number -> Hamburguesa -> Hamburguesa
 descuento porcentajeDescuento hamburguesa = 

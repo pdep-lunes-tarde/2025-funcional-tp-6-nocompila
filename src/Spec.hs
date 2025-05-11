@@ -33,17 +33,17 @@ correrTests = hspec $ do
     describe "TP 5" $ do
         describe "Agrandar" $ do
             it "al agrandar una hamburguesa se le agrega nuevamente su ingrediente base" $ do
-                agrandar cuartoDeLibra `shouldBe` Hamburguesa 20 [Carne, Pan, Carne, Cheddar, Pan]
-                agrandar cuartoDeLibraDePollo `shouldBe` Hamburguesa 20 [Pollo, Pan, Pollo, Cheddar, Pan]
-                agrandar cuartoDeLibraVeggie `shouldBe` Hamburguesa 20 [PatiVegano, Pan, PatiVegano, QuesoDeAlmendras, Pan]
+                agrandar cuartoDeLibra `shouldBe` Hamburguesa 20 [Pan, Carne, Carne, Cheddar, Pan]
+                agrandar cuartoDeLibraDePollo `shouldBe` Hamburguesa 20 [Pan, Pollo, Pollo, Cheddar, Pan]
+                agrandar cuartoDeLibraVeggie `shouldBe` Hamburguesa 20 [Pan, PatiVegano, PatiVegano, QuesoDeAlmendras, Pan]
             it "al agrandar una hamburguesa con Carne y Pollo se le agrega alguno de estos dos" $ do
-                agrandar (Hamburguesa 20 [Pan, Carne, Pollo, Cheddar, Pan]) `shouldBe` Hamburguesa 20 [Carne, Pan, Carne, Pollo, Cheddar, Pan]
+                agrandar (Hamburguesa 20 [Pan, Carne, Pollo, Cheddar, Pan]) `shouldBe` Hamburguesa 20 [Pan, Carne, Carne, Pollo, Cheddar, Pan]
 
         describe "agregarIngrediente" $ do
             it "Al agregar un ingrediente a una Hamburguesa la hamburguesa cambia" $ do
-                agregarIngrediente Curry dobleCuarto `shouldBe` Hamburguesa 20 [Curry, Carne, Cheddar, Pan, Carne, Cheddar, Pan]
-                agregarIngrediente QuesoDeAlmendras cuartoDeLibraDePollo `shouldBe` Hamburguesa 20 [QuesoDeAlmendras, Pan, Pollo, Cheddar, Pan]
-                agregarIngrediente BaconDeTofu cuartoDeLibraVeggie `shouldBe`  Hamburguesa 20 [BaconDeTofu, Pan, PatiVegano, QuesoDeAlmendras, Pan]
+                agregarIngrediente Curry dobleCuarto `shouldBe` Hamburguesa 20 [Pan, Curry, Carne, Cheddar, Carne, Cheddar, Pan]
+                agregarIngrediente QuesoDeAlmendras cuartoDeLibraDePollo `shouldBe` Hamburguesa 20 [Pan, QuesoDeAlmendras, Pollo, Cheddar, Pan]
+                agregarIngrediente BaconDeTofu cuartoDeLibraVeggie `shouldBe`  Hamburguesa 20 [Pan, BaconDeTofu, PatiVegano, QuesoDeAlmendras, Pan]
             it "Al agregar un ingrediente a una Hamburguesa la hamburguesa aumenta su precio" $ do
                 precioFinal (agregarIngrediente QuesoDeAlmendras dobleCuarto) `shouldBe` 99
 
@@ -54,8 +54,8 @@ correrTests = hspec $ do
             
         describe "delDia" $ do
             it "Al aplicarle la promo del dia a una hamburguesa, se descuenta un 30% y se le agregan papas" $ do
-                delDia cuartoDeLibra `shouldBe` Hamburguesa 14 [Papas, Pan, Carne, Cheddar, Pan]
-                delDia dobleCuarto `shouldBe`  Hamburguesa 14 [Papas, Carne, Cheddar, Pan, Carne, Cheddar, Pan]
+                delDia cuartoDeLibra `shouldBe` Hamburguesa 14 [Pan, Papas, Carne, Cheddar, Pan]
+                delDia dobleCuarto `shouldBe`  Hamburguesa 14 [Pan, Papas, Carne, Cheddar, Carne, Cheddar, Pan]
         
         describe "precioFinal" $ do
             it "el precio final de una pdepBurger deberia ser 110" $ do
@@ -70,7 +70,7 @@ correrTests = hspec $ do
         describe "hacerVeggie" $ do
             it "Convertir una hamburguesa en veggie cambia sus ingredientes por ingredientes veganos" $ do
                 hacerVeggie cuartoDeLibra `shouldBe` Hamburguesa 20 [Pan, PatiVegano, QuesoDeAlmendras, Pan]
-                hacerVeggie bigPdep `shouldBe` Hamburguesa 20 [Curry,PatiVegano,QuesoDeAlmendras,Pan,PatiVegano,QuesoDeAlmendras,Pan]
+                hacerVeggie bigPdep `shouldBe` Hamburguesa 20 [Pan,Curry,PatiVegano,QuesoDeAlmendras,PatiVegano,QuesoDeAlmendras,Pan]
             it "Hacer veggie una hamburguesa veggie no la modifica" $ do
                 hacerVeggie cuartoDeLibraVeggie `shouldBe` cuartoDeLibraVeggie
         
